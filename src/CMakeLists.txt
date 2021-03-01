@@ -1,1 +1,1 @@
-add_executable(nim main.c)
+add_executable(nim helper.c main.c play.c)

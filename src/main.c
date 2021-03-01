@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+#include "play.h"
 
 #define NIM_VERSION "0.0.0-alpha"
 
-void print_help(FILE *stream)
+void print_help(FILE *restrict stream)
 {
     fputs(
         "Usage:\n"
@@ -11,6 +12,7 @@ void print_help(FILE *stream)
         "The parameter <command> can be one of the following:\n"
         "    help\t\tPrint this help message\n"
         "    info\t\tPrint program information\n"
+        "    play\t\tStart the game\n"
         "    rules\t\tPrints gameplay rules\n",
         stream
     );
@@ -52,6 +54,8 @@ int main(int argc, char *argv[])
             print_help(stdout);
         } else if (!strcmp(argv[1], "info")) {
             print_info();
+        } else if (!strcmp(argv[1], "play")) {
+            play();
         } else if (!strcmp(argv[1], "rules")) {
             print_rules();
         } else {
