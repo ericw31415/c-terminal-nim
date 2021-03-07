@@ -131,13 +131,14 @@ void play(void)
         game.piles[move.pile - 1] -= move.counters;
         total_counters -= move.counters;
         printf(
-            "\nPlayer %d removed %d counters from pile %d.\n"
+            "\nPlayer %d removed %d counter%c from pile %d.\n"
             "Counters: %d -> %d\n\n",
-            curr_player, move.counters, move.pile,
-            game.piles[move.pile - 1] + move.counters, game.piles[move.pile - 1]
+            curr_player, move.counters, move.counters == 1 ? '\0' : 's',
+            move.pile, game.piles[move.pile - 1] + move.counters,
+            game.piles[move.pile - 1]
         );
         curr_player = !(curr_player - 1) + 1;
     }
-    printf("Congratulations Player %d, you won the game!", curr_player);
+    printf("Congratulations, Player %d, you won the game!\n", curr_player);
     free(game.piles);
 }

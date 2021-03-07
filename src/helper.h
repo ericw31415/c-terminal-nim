@@ -5,6 +5,6 @@
 int rand_int(int min, int max);
 
 // Strip the first newline from a string
-char *strip_newline(char *restrict str);
+char *strip_newline(char *str);
 
 #endif
