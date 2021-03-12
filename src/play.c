@@ -14,7 +14,7 @@
 
 struct GameState {
     int num_piles;
-    int *piles;
+    int *restrict piles;
 };
 
 struct PlayerMove {
@@ -116,7 +116,7 @@ static void get_move(const struct GameState *const restrict game,
     } while (!input_valid);
 }
 
-void play(void)
+void play(enum opponent_type opponent)
 {
     struct GameState game;
     int total_counters = init_game(&game);

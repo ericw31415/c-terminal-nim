@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "play.h"
 
-#define NIM_VERSION "1.0.0"
+#define NIM_VERSION "1.1.0-alpha"
 
 static void print_help(FILE *restrict stream)
 {
@@ -10,10 +11,12 @@ static void print_help(FILE *restrict stream)
         "Usage:\n"
         "    nim <command> [<args>]\n\n"
         "The parameter <command> can be one of the following:\n"
-        "    help\t\tPrint this help message\n"
-        "    info\t\tPrint program information\n"
-        "    play\t\tStart the game\n"
-        "    rules\t\tPrints gameplay rules\n",
+        "    help\t\tPrint this help message.\n"
+        "    info\t\tPrint program information.\n"
+        "    play [type]\t\tStart the game with the specified opponent type.\n"
+        "    \t\t\t[type] can be 'comp' or 'human' for a computer or human\n"
+        "    \t\t\topponent respectively.\n"
+        "    rules\t\tPrints gameplay rules.\n",
         stream);
 }
 
@@ -43,22 +46,38 @@ static void print_rules(void)
 
 int main(int argc, char *argv[])
 {
-    if (argc == 1) {
+    if (argc <= 1) {
         fputs("No command specified.\n", stderr);
         print_help(stderr);
+        return EXIT_FAILURE;
     } else {
         if (!strcmp(argv[1], "help")) {
             print_help(stdout);
         } else if (!strcmp(argv[1], "info")) {
             print_info();
         } else if (!strcmp(argv[1], "play")) {
-            play();
+            if (argc <= 2) {
+                fputs("Please specify an opponent type.\n", stderr);
+                print_help(stderr);
+                return EXIT_FAILURE;
+            } else {
+                if (!strcmp(argv[2], "comp")) {
+                    play(COMPUTER);
+                } else if (!strcmp(argv[2], "human")) {
+                    play(HUMAN);
+                } else {
+                    fputs("Invalid opponent type specified.\n", stderr);
+                    print_help(stderr);
+                    return EXIT_FAILURE;
+                }
+            }
         } else if (!strcmp(argv[1], "rules")) {
             print_rules();
         } else {
             fputs("Invalid command specified.\n", stderr);
             print_help(stderr);
+            return EXIT_FAILURE;
         }
     }
-    return 0;
+    return EXIT_SUCCESS;
 }
