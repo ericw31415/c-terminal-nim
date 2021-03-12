@@ -23,7 +23,7 @@ struct PlayerMove {
 };
 
 // Returns the total number of counters in-game
-int init_game(struct GameState *restrict game)
+static int init_game(struct GameState *restrict game)
 {
     srand(time(NULL));
 
@@ -41,7 +41,7 @@ int init_game(struct GameState *restrict game)
     return total;
 }
 
-void display_piles(const struct GameState *const restrict game)
+static void display_piles(const struct GameState *const restrict game)
 {
     for (int i = 0; i < game->num_piles; ++i) {
         printf("Pile %d: ", i + 1);
@@ -53,7 +53,8 @@ void display_piles(const struct GameState *const restrict game)
     }
 }
 
-bool is_num_input(const char *const restrict input, int *const restrict num)
+static bool is_num_input(const char *const restrict input,
+                         int *const restrict num)
 {
     int tmp = 0;
     int i;
@@ -72,8 +73,8 @@ bool is_num_input(const char *const restrict input, int *const restrict num)
     return true;
 }
 
-void get_move(const struct GameState *const restrict game,
-    struct PlayerMove *const restrict move)
+static void get_move(const struct GameState *const restrict game,
+                     struct PlayerMove *const restrict move)
 {
     char input[4096];
     bool input_num;
@@ -135,9 +136,11 @@ void play(void)
             "Counters: %d -> %d\n\n",
             curr_player, move.counters, move.counters == 1 ? '\0' : 's',
             move.pile, game.piles[move.pile - 1] + move.counters,
-            game.piles[move.pile - 1]
-        );
-        curr_player = !(curr_player - 1) + 1;
+            game.piles[move.pile - 1]);
+
+        // Toggle player
+        if (total_counters > 0)
+            curr_player = !(curr_player - 1) + 1;
     }
     printf("Congratulations, Player %d, you won the game!\n", curr_player);
     free(game.piles);

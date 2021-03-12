@@ -2,9 +2,9 @@
 #include <string.h>
 #include "play.h"
 
-#define NIM_VERSION "0.0.0-alpha"
+#define NIM_VERSION "1.0.0"
 
-void print_help(FILE *restrict stream)
+static void print_help(FILE *restrict stream)
 {
     fputs(
         "Usage:\n"
@@ -14,21 +14,19 @@ void print_help(FILE *restrict stream)
         "    info\t\tPrint program information\n"
         "    play\t\tStart the game\n"
         "    rules\t\tPrints gameplay rules\n",
-        stream
-    );
+        stream);
 }
 
-void print_info(void)
+static void print_info(void)
 {
     printf(
         "C Terminal Nim - Version %s\n"
         "Author: Eric Wan (ericw31415)\n"
         "Github page: https://github.com/ericw31415/c-terminal-nim\n",
-        NIM_VERSION
-    );
+        NIM_VERSION);
 }
 
-void print_rules(void)
+static void print_rules(void)
 {
     puts(
         "How to play:\n\n"
@@ -40,8 +38,7 @@ void print_rules(void)
         "the last counter.\n\n"
         "Playing the game:\n\n"
         "Run 'nim play' and follow the prompts that appear in your terminal. Have\n"
-        "fun!"
-    );
+        "fun!");
 }
 
 int main(int argc, char *argv[])
