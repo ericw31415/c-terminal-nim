@@ -12,10 +12,6 @@ project(c-terminal-nim C)
 if(CMAKE_CONFIGURATION_TYPES)
     set(CMAKE_CONFIGURATION_TYPES Debug Release CACHE STRING
         "List of configuration types to build" FORCE)
-    unset(CMAKE_C_FLAGS_MINSIZEREL CACHE)
-    unset(CMAKE_C_FLAGS_RELWITHDEBINFO CACHE)
-    unset(CMAKE_EXE_LINKER_FLAGS_MINSIZEREL CACHE)
-    unset(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO CACHE)
 
     string(REPLACE ";" ", " configs "${CMAKE_CONFIGURATION_TYPES}")
     message(STATUS "Found configurations: ${configs}")
