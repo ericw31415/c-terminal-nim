@@ -3,7 +3,7 @@
 #include <string.h>
 #include "play.h"
 
-#define NIM_VERSION "1.1.0-alpha"
+#define NIM_VERSION "2.0.0-beta"
 
 static void print_help(FILE *restrict stream)
 {

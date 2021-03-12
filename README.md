@@ -1,6 +1,6 @@
 # C Terminal Nim
 C Terminal Nim has a self-explanatory name: it is a game of Nim that you can play in your terminal.
-At the moment, only a local two-player gamemode is available.
+There are two different gamemodes: local two-player, and human versus computer.
 
 ## Instructions
 ### Downloading
