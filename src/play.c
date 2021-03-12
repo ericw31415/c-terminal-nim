@@ -12,16 +12,6 @@
 #define MIN_PILE_COUNTERS 1
 #define MAX_PILE_COUNTERS 20
 
-struct GameState {
-    int num_piles;
-    int *restrict piles;
-};
-
-struct PlayerMove {
-    int pile;
-    int counters;
-};
-
 // Returns the total number of counters in-game
 static int init_game(struct GameState *restrict game)
 {
@@ -74,7 +64,7 @@ static bool is_num_input(const char *const restrict input,
 }
 
 static void get_move(const struct GameState *const restrict game,
-                     struct PlayerMove *const restrict move)
+                     struct GameMove *const restrict move)
 {
     char input[4096];
     bool input_num;
@@ -121,14 +111,21 @@ void play(enum opponent_type opponent)
     struct GameState game;
     int total_counters = init_game(&game);
 
+    enum opponent_type players[2] = {HUMAN, HUMAN};
+    if (opponent == COMPUTER) // randomly assign a player to the computer
+        players[rand_int(0, 1)] = COMPUTER;
+
     int curr_player = 1;
-    struct PlayerMove move;
+    struct GameMove move;
     while (total_counters > 0) {
         printf("Player %d's turn\n\n", curr_player);
         display_piles(&game);
         putchar('\n');
 
-        get_move(&game, &move);
+        if (players[curr_player - 1] == HUMAN)
+            get_move(&game, &move);
+        if (players[curr_player - 1] == COMPUTER)
+            comp_move(&game, &move);
         game.piles[move.pile - 1] -= move.counters;
         total_counters -= move.counters;
         printf(
